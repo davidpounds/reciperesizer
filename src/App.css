@@ -1,38 +1,137 @@
-.App {
-  text-align: center;
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 300;
+}
+h1 {
+	font-size: 1.8rem;
+	margin-top: 0;
+	text-align: center;
+}
+h2 {
+	font-size: 1.4rem;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.reciperesizer {
+	display: grid;
+	grid-column-gap: 2rem;
+	grid-template-columns: 1fr;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+@media screen and (min-width: 900px) {
+	.reciperesizer {
+		grid-template-columns: repeat(2, 1fr);
+	}
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+@media screen and (min-width: 1350px) {
+	.reciperesizer {
+		grid-template-columns: repeat(3, 1fr);
+	}
 }
 
-.App-link {
-  color: #61dafb;
+.panel {
+	background: #e7e7e7;
+	padding: 2rem;
+	margin: 0 0 2rem 0;
+}
+.radio {
+	display: inline-block;
+	width: 6rem;
+	text-align: center;
+	margin-bottom: 2rem;
+}
+.off-screen {
+	position: absolute;
+	top: auto;
+	left: -1000rem;
+}
+.radio label:before {
+	display: block;
+	content: '';
+	background: #ccc;
+	margin: 0 auto;
+	border: 2px solid transparent;
+}
+.radio.circle label:before {
+	width: 4rem;
+	height: 4rem;
+	border-radius: 50%;
+}
+.radio.oval label:before {
+	width: 4rem;
+	height: 2rem;
+	border-radius: 50%;
+}
+.radio.square label:before {
+	width: 4rem;
+	height: 4rem;
+	border-radius: 5%;
+}
+.radio.rectangle label:before {
+	width: 4rem;
+	height: 2rem;
+	border-radius: 5%;
+}
+.radio input:checked + label:before {
+	background: #fff;
+	border-color: #678;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.form-group {
+	margin: 0 0 1rem 0;
+	padding: 0.5rem 0;
+	overflow: hidden;
+}
+@media screen and (min-width: 900px) {
+	.form-group-pair {
+		display: inline-block;
+		width: 50%;
+		float: left;
+	}
+}
+.form-group label {
+	display: block;
+}
+.tinarea {
+	color: #999;
+	font-size: 80%;
+	text-align: center;
+}
+input[type=text],
+select {
+	border: none;
+	padding: 1rem 0.5rem;
+	background: #fff;
+	font-size: 1.2rem;
+}
+.numeric {
+	text-align: right;
+	width: 7rem;
+	max-width: 100%;
+}
+
+fieldset {
+	margin: 0 0 2rem 0;
+	border: none;
+	padding: 0;
+}
+legend {
+	font-size: 1.5rem;
+}
+button {
+	border: none;
+	padding: 1rem;
+	font-size: 1.2rem;
+	background: #def;
+	box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+}
+.debug {
+	width: 50vw;
+	height: calc(100vh - 4rem);
+	overflow: auto;
+	position: absolute;
+	top: 1rem;
+	left: 2rem;
+	border-radius: 1rem;
+	background: rgba(0, 0, 0, 0.5);
+	color: #fff;
 }
