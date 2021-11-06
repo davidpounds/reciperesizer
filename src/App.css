@@ -28,6 +28,10 @@ h2 {
 	}
 }
 
+.reciperesizer > h1 {
+	grid-column: 1 / -1;
+}
+
 .panel {
 	background: #e7e7e7;
 	padding: 2rem;
@@ -103,9 +107,11 @@ select {
 	background: #fff;
 	font-size: 1.2rem;
 }
+input + label + select {
+	margin-left: 0.5rem;
+}
 .numeric {
 	text-align: right;
-	width: 7rem;
 	max-width: 100%;
 }
 

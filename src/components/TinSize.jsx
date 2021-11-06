@@ -52,6 +52,8 @@ const TinSize = props => {
                 pattern={NUMERIC_REGEXP} 
                 value={tinSize} 
                 onChange={tinSizeChangeHandler}
+                size={5}
+                maxLength={5}
             />
 
             <label htmlFor={`${tinType}_${sizeType}_unit`} className="off-screen">

@@ -63,7 +63,7 @@ const App = () => {
   ]);
 
   return (
-    <div className="App">
+    <div className="reciperesizer">
       <h1>Recipe resizer</h1>
       <TinSelector tinType={TIN_TYPE.RECIPE} />
       <TinSelector tinType={TIN_TYPE.RESIZED} />

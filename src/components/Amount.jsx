@@ -42,6 +42,8 @@ const Amount = props => {
                 className="numeric" 
                 pattern={NUMERIC_REGEXP} 
                 value={amount}
+                size={6}
+                maxLength={6}
                 onChange={amountChangeHandler}
                 readOnly={tinType === TIN_TYPE.RESIZED}
             />
