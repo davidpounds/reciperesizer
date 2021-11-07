@@ -2,7 +2,6 @@ import { createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { 
-    SHAPE,
     START_SIZE,
     START_AMOUNT,
     UNIT,
@@ -12,20 +11,12 @@ import {
 
 const initialState = {
     [TIN_TYPE.RECIPE]: {
-        tinShape: SHAPE.CIRCLE,
-        tinWidth: START_SIZE,
-        tinLength: START_SIZE,
-        tinWidthUnits: UNIT.CM,
-        tinLengthUnits: UNIT.CM,
+        tinAreaCm2: Math.PI * START_SIZE * START_SIZE / 4 ,
         amount: START_AMOUNT,
         unit: UNIT.G,
     },
     [TIN_TYPE.RESIZED]: {
-        tinShape: SHAPE.CIRCLE,
-        tinWidth: START_SIZE,
-        tinLength: START_SIZE,
-        tinWidthUnits: UNIT.CM,
-        tinLengthUnits: UNIT.CM,
+        tinAreaCm2: Math.PI * START_SIZE * START_SIZE / 4 ,
         amount: START_AMOUNT,
         unit: UNIT.G,
     },
@@ -44,16 +35,8 @@ const reducer = (state = initialState, action = {}) => {
     const { type, tinType, data } = action;
     
     switch (type) {
-        case ACTION.TIN_SHAPE:
-            return newState(state, tinType, 'tinShape', data);
-        case ACTION.TIN_WIDTH:
-            return newState(state, tinType, 'tinWidth', data);
-        case ACTION.TIN_LENGTH:
-            return newState(state, tinType, 'tinLength', data);
-        case ACTION.TIN_WIDTH_UNITS:
-            return newState(state, tinType, 'tinWidthUnits', data);
-        case ACTION.TIN_LENGTH_UNITS:
-            return newState(state, tinType, 'tinLengthUnits', data);
+        case ACTION.TIN_AREA_CM2:
+            return newState(state, tinType, 'tinAreaCm2', data);
         case ACTION.AMOUNT:
             return newState(state, tinType, 'amount', data);
         case ACTION.UNIT:

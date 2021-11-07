@@ -7,11 +7,7 @@ const selectorFactory = property => createSelector(
     (state, tinType) => state?.[tinType]?.[property] ?? null
 );
 
-export const getTinShape = selectorFactory('tinShape');
-export const getTinWidth = selectorFactory('tinWidth');
-export const getTinLength = selectorFactory('tinLength');
-export const getTinWidthUnits = selectorFactory('tinWidthUnits');
-export const getTinLengthUnits = selectorFactory('tinLengthUnits');
+export const getTinAreaCm2 = selectorFactory('tinAreaCm2');
 export const getAmount = selectorFactory('amount');
 export const getUnit = selectorFactory('unit');
 export const getConversionRatio = state => state?.conversionRatio ?? 1;

@@ -1,13 +1,13 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { getTinShape } from '../redux/selectors';
-import { setTinShape } from '../redux/actions';
-
 const TinShapeRadio = props => {
-    const { shape, tinType, label } = props;
-    const dispatch = useDispatch();
-    const tinShape = useSelector(state => getTinShape(state, tinType));
+    const { 
+        shape, 
+        tinType, 
+        label, 
+        tinShape, 
+        setTinShape, 
+    } = props;
     const changeHandler = e => {
-        dispatch(setTinShape(tinType, shape));
+        setTinShape(shape);
     };
 
     return (

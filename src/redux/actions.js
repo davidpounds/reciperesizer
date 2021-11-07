@@ -1,9 +1,5 @@
 export const ACTION = Object.freeze({
-    TIN_SHAPE: 'TIN_SHAPE',
-    TIN_WIDTH: 'TIN_WIDTH',
-    TIN_LENGTH: 'TIN_LENGTH',
-    TIN_WIDTH_UNITS: 'TIN_WIDTH_UNITS',
-    TIN_LENGTH_UNITS: 'TIN_LENGTH_UNITS',
+    TIN_AREA_CM2: 'TIN_AREA_CM2',
     AMOUNT: 'AMOUNT',
     UNIT: 'UNIT',
     CONVERSION_RATIO: 'CONVERSION_RATIO',
@@ -11,11 +7,7 @@ export const ACTION = Object.freeze({
 
 const actionFactory = type => (tinType, data) => ({ type, tinType, data });
 
-export const setTinShape = actionFactory(ACTION.TIN_SHAPE);
-export const setTinWidth = actionFactory(ACTION.TIN_WIDTH);
-export const setTinLength = actionFactory(ACTION.TIN_LENGTH);
-export const setTinWidthUnits = actionFactory(ACTION.TIN_WIDTH_UNITS);
-export const setTinLengthUnits = actionFactory(ACTION.TIN_LENGTH_UNITS);
+export const setTinAreaCm2 = actionFactory(ACTION.TIN_AREA_CM2);
 export const setAmount = actionFactory(ACTION.AMOUNT);
 export const setUnit = actionFactory(ACTION.UNIT);
 export const setConversionRatio = data => ({
