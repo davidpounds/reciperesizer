@@ -1,13 +1,14 @@
 import { createSelector } from 'reselect';
 import { CONVERSIONS, TIN_TYPE } from '../utils';
+import { Store } from './store';
 
-export const getRecipeTinAreaCm2 = state => state[TIN_TYPE.RECIPE].tinAreaCm2;
-export const getResizedTinAreaCm2 = state => state[TIN_TYPE.RESIZED].tinAreaCm2;
-export const getRecipeAmount = state => state[TIN_TYPE.RECIPE].amount;
-export const getResizedAmount = state => state[TIN_TYPE.RESIZED].amount;
-export const getRecipeUnit = state => state[TIN_TYPE.RECIPE].unit;
-export const getResizedUnit = state => state[TIN_TYPE.RESIZED].unit;
-export const getConversionRatio = state => state?.conversionRatio ?? 1;
+export const getRecipeTinAreaCm2 = (state: Store) => state[TIN_TYPE.RECIPE].tinAreaCm2;
+export const getResizedTinAreaCm2 = (state: Store) => state[TIN_TYPE.RESIZED].tinAreaCm2;
+export const getRecipeAmount = (state: Store) => state[TIN_TYPE.RECIPE].amount;
+export const getResizedAmount = (state: Store) => state[TIN_TYPE.RESIZED].amount;
+export const getRecipeUnit = (state: Store) => state[TIN_TYPE.RECIPE].unit;
+export const getResizedUnit = (state: Store) => state[TIN_TYPE.RESIZED].unit;
+export const getConversionRatio = (state: Store) => state?.conversionRatio ?? 1;
 
 export const getRecipeUnitType = createSelector(
     [getRecipeUnit],

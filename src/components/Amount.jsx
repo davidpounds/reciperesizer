@@ -3,7 +3,7 @@ import {
     NUMERIC_REGEXP,
     TIN_TYPE,
     getAmountUnitOptions,
-} from "../utils";
+} from "../utils.ts";
 import {
     getRecipeAmount,
     getResizedAmount,

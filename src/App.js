@@ -13,7 +13,7 @@ import {
   setConversionRatio,
   setAmount,
 } from './redux/actions';
-import { TIN_TYPE, convert } from './utils';
+import { TIN_TYPE, convert } from './utils.ts';
 import TinSelector from './components/TinSelector';
 import Amount from './components/Amount';
 

@@ -1,7 +1,7 @@
 import { 
     NUMERIC_REGEXP, 
     ucFirst,
-} from '../utils'; 
+} from '../utils.ts'; 
 
 const TinSize = props => {
     const {

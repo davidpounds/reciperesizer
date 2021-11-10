@@ -11,7 +11,7 @@ import {
     ucFirst,
     getTinArea,
     getUnits,
-} from '../utils';
+} from '../utils.ts';
 import TinShapeRadio from './TinShapeRadio';
 import TinSize from './TinSize';
 
