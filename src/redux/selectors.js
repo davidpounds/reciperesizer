@@ -1,35 +1,28 @@
 import { createSelector } from 'reselect';
-import { CONVERSIONS } from '../utils';
+import { CONVERSIONS, TIN_TYPE } from '../utils';
 
-const selectorFactory = property => createSelector(
-    state => state,
-    (_, tinType) => tinType,
-    (state, tinType) => state?.[tinType]?.[property] ?? null
-);
-
-export const getTinAreaCm2 = selectorFactory('tinAreaCm2');
-export const getAmount = selectorFactory('amount');
-export const getUnit = selectorFactory('unit');
+export const getRecipeTinAreaCm2 = state => state[TIN_TYPE.RECIPE].tinAreaCm2;
+export const getResizedTinAreaCm2 = state => state[TIN_TYPE.RESIZED].tinAreaCm2;
+export const getRecipeAmount = state => state[TIN_TYPE.RECIPE].amount;
+export const getResizedAmount = state => state[TIN_TYPE.RESIZED].amount;
+export const getRecipeUnit = state => state[TIN_TYPE.RECIPE].unit;
+export const getResizedUnit = state => state[TIN_TYPE.RESIZED].unit;
 export const getConversionRatio = state => state?.conversionRatio ?? 1;
 
-export const getUnitType = createSelector(
-    state => state,
-    (_, tinType) => tinType,
-    (state, tinType) => {
-        const unit = getUnit(state, tinType);
-        return CONVERSIONS.find(conv => conv.unit === unit)?.type ?? null;
-    }
+export const getRecipeUnitType = createSelector(
+    [getRecipeUnit],
+    (recipeUnit) => CONVERSIONS.find(conv => conv.unit === recipeUnit)?.type ?? null
 );
 
-export const getCompatibleUnits = createSelector(
-    state => state,
-    (_, tinType) => tinType,
-    (state, tinType) => {
-        const unitType = getUnitType(state, tinType);
-        if (unitType === null) return [];
-        return CONVERSIONS.filter(conv => conv.type === unitType).map(conv => ({
-            value: conv.unit,
-            label: conv.display || conv.unit,
-        }));
-    }
+export const getResizedUnitType = createSelector(
+    [getResizedUnit],
+    (resizedUnit) => CONVERSIONS.find(conv => conv.unit === resizedUnit)?.type ?? null
+);
+
+export const getResizedCompatibleUnits = createSelector(
+    [getResizedUnitType],
+    (resizedUnitType) => CONVERSIONS.filter(conv => conv.type === resizedUnitType).map(conv => ({
+        value: conv.unit,
+        label: conv.display || conv.unit,
+    }))
 );

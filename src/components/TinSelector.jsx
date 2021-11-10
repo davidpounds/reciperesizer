@@ -36,6 +36,8 @@ const TinSelector = props => {
         tinWidthUnits,
         tinLength,
         tinLengthUnits,
+        tinType,
+        dispatch,
     ]);
 
     const showLength = [SHAPE.OVAL, SHAPE.RECTANGLE].includes(tinShape);

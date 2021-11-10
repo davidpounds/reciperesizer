@@ -2,9 +2,12 @@ import './App.css';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  getTinAreaCm2,
-  getAmount,
-  getUnit,
+  getRecipeTinAreaCm2,
+  getResizedTinAreaCm2,
+  getRecipeAmount,
+  getResizedAmount,
+  getRecipeUnit,
+  getResizedUnit,
 } from './redux/selectors';
 import { 
   setConversionRatio,
@@ -15,12 +18,12 @@ import TinSelector from './components/TinSelector';
 import Amount from './components/Amount';
 
 const App = () => {
-  const recipeTinArea = useSelector(state => getTinAreaCm2(state, TIN_TYPE.RECIPE));
-  const recipeAmount = useSelector(state => getAmount(state, TIN_TYPE.RECIPE));
-  const recipeUnit = useSelector(state => getUnit(state, TIN_TYPE.RECIPE));
-  const resizedTinArea = useSelector(state => getTinAreaCm2(state, TIN_TYPE.RESIZED));
-  const resizedAmount = useSelector(state => getAmount(state, TIN_TYPE.RESIZED));
-  const resizedUnit = useSelector(state => getUnit(state, TIN_TYPE.RESIZED));
+  const recipeTinArea = useSelector(getRecipeTinAreaCm2);
+  const resizedTinArea = useSelector(getResizedTinAreaCm2);
+  const recipeAmount = useSelector(getRecipeAmount);
+  const resizedAmount = useSelector(getResizedAmount);
+  const recipeUnit = useSelector(getRecipeUnit);
+  const resizedUnit = useSelector(getResizedUnit);
   const dispatch = useDispatch();
 
   useEffect(() => {

@@ -1,5 +1,4 @@
 import { 
-    TIN_SIZE_TYPE,
     NUMERIC_REGEXP, 
     ucFirst,
 } from '../utils'; 

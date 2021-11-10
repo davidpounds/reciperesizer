@@ -5,9 +5,11 @@ import {
     getAmountUnitOptions,
 } from "../utils";
 import {
-    getAmount,
-    getUnit,
-    getCompatibleUnits,
+    getRecipeAmount,
+    getResizedAmount,
+    getRecipeUnit,
+    getResizedUnit,
+    getResizedCompatibleUnits,
 } from '../redux/selectors';
 import {
     setAmount,
@@ -17,9 +19,10 @@ import {
 const Amount = props => {
     const { tinType } = props;
     const dispatch = useDispatch();
-    const amount = useSelector(state => getAmount(state, tinType));
-    const amountUnit = useSelector(state => getUnit(state, tinType));
-    const resizedAmountUnitOptions = useSelector(state => getCompatibleUnits(state, TIN_TYPE.RECIPE));
+    const [getAmount, getUnit] = tinType === TIN_TYPE.RECIPE ? [getRecipeAmount, getRecipeUnit] : [getResizedAmount, getResizedUnit];
+    const amount = useSelector(getAmount);
+    const amountUnit = useSelector(getUnit);
+    const resizedAmountUnitOptions = useSelector(getResizedCompatibleUnits);
 
     const amountChangeHandler = e => {
         dispatch(setAmount(tinType, e.target.value));
