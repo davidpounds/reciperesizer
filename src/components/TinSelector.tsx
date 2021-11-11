@@ -11,11 +11,11 @@ import {
     ucFirst,
     getTinArea,
     getUnits,
-} from '../utils.ts';
+} from '../utils';
 import TinShapeRadio from './TinShapeRadio';
 import TinSize from './TinSize';
 
-const TinSelector = props => {
+const TinSelector = (props: { tinType: TIN_TYPE }) => {
     const { tinType } = props;
 
     const dispatch = useDispatch();
@@ -41,7 +41,7 @@ const TinSelector = props => {
     ]);
 
     const showLength = [SHAPE.OVAL, SHAPE.RECTANGLE].includes(tinShape);
-    const displayArea = area => Number.isNaN(area) ? 0 : area.toFixed(0);
+    const displayArea = (area: number): string => Number.isNaN(area) ? '0' : area.toFixed(0);
     const lengthUnits = getUnits(UNIT_TYPE.LENGTH);
 
     return (

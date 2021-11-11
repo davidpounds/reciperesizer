@@ -1,9 +1,10 @@
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { 
     NUMERIC_REGEXP,
     TIN_TYPE,
     getAmountUnitOptions,
-} from "../utils.ts";
+} from "../utils";
 import {
     getRecipeAmount,
     getResizedAmount,
@@ -16,7 +17,7 @@ import {
     setUnit,
 } from '../redux/actions';
 
-const Amount = props => {
+const Amount = (props: { tinType: TIN_TYPE }) => {
     const { tinType } = props;
     const dispatch = useDispatch();
     const [getAmount, getUnit] = tinType === TIN_TYPE.RECIPE ? [getRecipeAmount, getRecipeUnit] : [getResizedAmount, getResizedUnit];
@@ -24,11 +25,11 @@ const Amount = props => {
     const amountUnit = useSelector(getUnit);
     const resizedAmountUnitOptions = useSelector(getResizedCompatibleUnits);
 
-    const amountChangeHandler = e => {
-        dispatch(setAmount(tinType, e.target.value));
+    const amountChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        dispatch(setAmount(tinType, +e.target.value));
     };
-    const amountUnitChangeHandler = e => {
-        dispatch(setUnit(tinType, e.target.value));
+    const amountUnitChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        dispatch(setUnit(tinType, +e.target.value));
     };
 
     const amountUnitOptions = getAmountUnitOptions();

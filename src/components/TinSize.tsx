@@ -1,9 +1,23 @@
+import React from 'react';
 import { 
+    TIN_TYPE,
+    TIN_SIZE_TYPE,
+    UNIT,
     NUMERIC_REGEXP, 
     ucFirst,
-} from '../utils.ts'; 
+} from '../utils'; 
 
-const TinSize = props => {
+interface TinSizeProps {
+    tinType: TIN_TYPE, 
+    sizeType: TIN_SIZE_TYPE,
+    size: number,
+    setSize: React.Dispatch<React.SetStateAction<number>>,
+    sizeUnits: UNIT, 
+    setSizeUnits: React.Dispatch<React.SetStateAction<UNIT>>,
+    lengthUnits: UNIT[],
+}
+
+const TinSize = (props: TinSizeProps) => {
     const {
         tinType, 
         sizeType,
@@ -14,12 +28,12 @@ const TinSize = props => {
         lengthUnits,
     } = props;
 
-    const tinSizeChangeHandler = e => {
-        setSize(e.target.value);
+    const tinSizeChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSize(+e.target.value);
     };
 
-    const tinUnitChangeHandler = e => {
-        setSizeUnits(e.target.value);
+    const tinUnitChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>)=> {
+        setSizeUnits(e.target.value as UNIT);
     };
 
     return (

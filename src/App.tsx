@@ -13,11 +13,11 @@ import {
   setConversionRatio,
   setAmount,
 } from './redux/actions';
-import { TIN_TYPE, convert } from './utils.ts';
+import { TIN_TYPE, convert } from './utils';
 import TinSelector from './components/TinSelector';
 import Amount from './components/Amount';
 
-const App = () => {
+const App = (): any => {
   const recipeTinArea = useSelector(getRecipeTinAreaCm2);
   const resizedTinArea = useSelector(getResizedTinAreaCm2);
   const recipeAmount = useSelector(getRecipeAmount);
@@ -29,8 +29,11 @@ const App = () => {
   useEffect(() => {
     const newConversionRatio = resizedTinArea / recipeTinArea;
     dispatch(setConversionRatio(newConversionRatio));
-    const newAmount = convert(recipeAmount, recipeUnit, resizedUnit) * newConversionRatio;
-    dispatch(setAmount(TIN_TYPE.RESIZED, newAmount.toPrecision(3)));
+    const convertedAmount = convert(recipeAmount, recipeUnit, resizedUnit);
+    if (convertedAmount !== false) {
+      const newAmount = convertedAmount * newConversionRatio;
+      dispatch(setAmount(TIN_TYPE.RESIZED, +newAmount.toPrecision(3)));
+    }
   },
   [
     recipeTinArea,

@@ -1,4 +1,15 @@
-const TinShapeRadio = props => {
+import React from 'react';
+import { SHAPE, TIN_TYPE } from '../utils';
+
+interface TinShapeRadioProps {
+    shape: SHAPE, 
+    tinType: TIN_TYPE, 
+    label: string, 
+    tinShape: SHAPE, 
+    setTinShape: React.Dispatch<React.SetStateAction<SHAPE>>, 
+}
+
+const TinShapeRadio = (props: TinShapeRadioProps) => {
     const { 
         shape, 
         tinType, 
@@ -6,7 +17,7 @@ const TinShapeRadio = props => {
         tinShape, 
         setTinShape, 
     } = props;
-    const changeHandler = e => {
+    const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTinShape(shape);
     };
 
