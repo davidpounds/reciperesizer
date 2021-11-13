@@ -17,7 +17,11 @@ import {
     setUnit,
 } from '../redux/actions';
 
-const Amount = (props: { tinType: TIN_TYPE }) => {
+interface Props {
+    tinType: TIN_TYPE,
+}
+
+const Amount: React.FC<Props> = (props) => {
     const { tinType } = props;
     const dispatch = useDispatch();
     const [getAmount, getUnit] = tinType === TIN_TYPE.RECIPE ? [getRecipeAmount, getRecipeUnit] : [getResizedAmount, getResizedUnit];

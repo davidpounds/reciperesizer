@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setTinAreaCm2 } from '../redux/actions';
 import { 
@@ -15,7 +15,11 @@ import {
 import TinShapeRadio from './TinShapeRadio';
 import TinSize from './TinSize';
 
-const TinSelector = (props: { tinType: TIN_TYPE }) => {
+interface Props {
+    tinType: TIN_TYPE,
+}
+
+const TinSelector: React.FC<Props> = (props: Props) => {
     const { tinType } = props;
 
     const dispatch = useDispatch();

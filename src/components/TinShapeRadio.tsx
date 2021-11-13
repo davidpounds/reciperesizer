@@ -9,7 +9,7 @@ interface TinShapeRadioProps {
     setTinShape: React.Dispatch<React.SetStateAction<SHAPE>>, 
 }
 
-const TinShapeRadio = (props: TinShapeRadioProps) => {
+const TinShapeRadio: React.FC<TinShapeRadioProps> = (props: TinShapeRadioProps) => {
     const { 
         shape, 
         tinType, 

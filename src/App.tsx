@@ -1,5 +1,5 @@
 import './App.css';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   getRecipeTinAreaCm2,
@@ -17,7 +17,7 @@ import { TIN_TYPE, convert } from './utils';
 import TinSelector from './components/TinSelector';
 import Amount from './components/Amount';
 
-const App = (): any => {
+const App: React.FC<{}> = () => {
   const recipeTinArea = useSelector(getRecipeTinAreaCm2);
   const resizedTinArea = useSelector(getResizedTinAreaCm2);
   const recipeAmount = useSelector(getRecipeAmount);

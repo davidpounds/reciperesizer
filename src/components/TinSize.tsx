@@ -17,7 +17,7 @@ interface TinSizeProps {
     lengthUnits: UNIT[],
 }
 
-const TinSize = (props: TinSizeProps) => {
+const TinSize: React.FC<TinSizeProps> = (props: TinSizeProps) => {
     const {
         tinType, 
         sizeType,
