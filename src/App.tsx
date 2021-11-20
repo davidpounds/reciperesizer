@@ -12,6 +12,7 @@ import {
 import { 
   setConversionRatio,
   setAmount,
+  setUnit,
 } from './redux/actions';
 import { TIN_TYPE, convert } from './utils';
 import TinSelector from './components/TinSelector';
@@ -42,6 +43,14 @@ const App: React.FC<{}> = () => {
     resizedTinArea,
     resizedAmount,
     resizedUnit,
+    dispatch,
+  ]);
+
+  useEffect(() => {
+    dispatch(setUnit(TIN_TYPE.RESIZED, recipeUnit));
+  },
+  [
+    recipeUnit,
     dispatch,
   ]);
 

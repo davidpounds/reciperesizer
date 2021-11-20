@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { 
     NUMERIC_REGEXP,
     TIN_TYPE,
+    UNIT,
     getAmountUnitOptions,
 } from "../utils";
 import {
@@ -33,7 +34,7 @@ const Amount: React.FC<Props> = (props) => {
         dispatch(setAmount(tinType, +e.target.value));
     };
     const amountUnitChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        dispatch(setUnit(tinType, +e.target.value));
+        dispatch(setUnit(tinType, e.target.value as UNIT));
     };
 
     const amountUnitOptions = getAmountUnitOptions();
