@@ -17,6 +17,7 @@ import {
 import { TIN_TYPE, convert } from './utils';
 import TinSelector from './components/TinSelector';
 import Amount from './components/Amount';
+import Temperature from './components/Temperature';
 
 const App: React.FC<{}> = () => {
   const recipeTinArea = useSelector(getRecipeTinAreaCm2);
@@ -65,6 +66,8 @@ const App: React.FC<{}> = () => {
         <Amount tinType={TIN_TYPE.RECIPE} />
         <Amount tinType={TIN_TYPE.RESIZED} />
       </div>
+
+      <Temperature />
     </div>
   );
 };

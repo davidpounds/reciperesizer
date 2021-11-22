@@ -37,6 +37,10 @@ h2 {
 	padding: 2rem;
 	margin: 0 0 2rem 0;
 }
+.panel.temperatures .form-group {
+	display: inline-block;
+	margin-right: 2rem;
+}
 .radio {
 	display: inline-block;
 	width: 6rem;

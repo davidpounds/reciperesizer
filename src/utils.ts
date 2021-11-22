@@ -58,6 +58,18 @@ export enum UNIT {
     SM = "small",
 }
 
+export enum TEMPERATURE_UNIT {
+    F = "farenheit",
+    C = "celsius",
+    GM = "gas mark",
+}
+
+export interface TemperatureConversionResult {
+    [TEMPERATURE_UNIT.F]: number;
+    [TEMPERATURE_UNIT.C]: number;
+    [TEMPERATURE_UNIT.GM]: string;
+}
+
 export const CONVERSIONS: Conversion[] = [
     { type: UNIT_TYPE.WEIGHT, unit: UNIT.KG, conversion: 1, dp: 3 },
     { type: UNIT_TYPE.WEIGHT, unit: UNIT.G, conversion: 1000, dp: 0 },
@@ -139,3 +151,65 @@ export const getResizedAmountUnitOptions = (amountUnit: UNIT): UnitOption[] => {
     return compatibleConversions.map(conversion => ({label: conversion.display || conversion.unit, value: conversion.unit}));
 };
 
+const roundToNearestTen = (value: number): number => Math.round(value / 10) * 10;
+const roundToNearestFive = (value: number): number => Math.round(value / 20) * 20;
+const cToF = (c: number): number => c * 9 / 5 + 32;
+const fToC = (f: number): number => (f - 32) * 5 / 9;
+
+export const TEMPERATURE_RANGE = Object.freeze({
+    [TEMPERATURE_UNIT.C]: {
+        min: 100,
+        max: 240,
+    },
+    [TEMPERATURE_UNIT.F]: {
+        min: 210,
+        max: 460,
+    }
+});
+
+export const temperatureConversions = Object.freeze([
+    { celsius: 100, gasMark: '< ¼' },
+    { celsius: 110, gasMark: '¼' },
+    { celsius: 120, gasMark: '¼ - ½' },
+    { celsius: 130, gasMark: '½' },
+    { celsius: 140, gasMark: '1' },
+    { celsius: 150, gasMark: '2' },
+    { celsius: 160, gasMark: '2½' },
+    { celsius: 170, gasMark: '3' },
+    { celsius: 180, gasMark: '4' },
+    { celsius: 190, gasMark: '5' },
+    { celsius: 200, gasMark: '6' },
+    { celsius: 210, gasMark: '6½' },
+    { celsius: 220, gasMark: '7' },
+    { celsius: 230, gasMark: '8' },
+    { celsius: 240, gasMark: '9' },
+]);
+
+export const TEMPERATURE_OUT_OF_RANGE = 'Out of range';
+
+export const convertTemperature = (fromValue: number | string, fromUnit: TEMPERATURE_UNIT): TemperatureConversionResult => {
+    const conversion: TemperatureConversionResult = {
+        [TEMPERATURE_UNIT.F]: 0,
+        [TEMPERATURE_UNIT.C]: 0,
+        [TEMPERATURE_UNIT.GM]: '',
+    };
+    if (fromUnit === TEMPERATURE_UNIT.C) {
+        const roundedC = roundToNearestTen(fromValue as number);
+        conversion[TEMPERATURE_UNIT.C] = fromValue as number;
+        conversion[TEMPERATURE_UNIT.F] = roundToNearestFive(cToF(fromValue as number));
+        conversion[TEMPERATURE_UNIT.GM] = temperatureConversions.find(tc => tc.celsius === roundedC)?.gasMark ?? TEMPERATURE_OUT_OF_RANGE;
+    }
+    if (fromUnit === TEMPERATURE_UNIT.F) {
+        const c = fToC(fromValue as number);
+        conversion[TEMPERATURE_UNIT.C] = roundToNearestFive(c);
+        conversion[TEMPERATURE_UNIT.F] = fromValue as number;
+        conversion[TEMPERATURE_UNIT.GM] = temperatureConversions.find(tc => tc.celsius === roundToNearestTen(c))?.gasMark ?? TEMPERATURE_OUT_OF_RANGE;
+    }
+    if (fromUnit === TEMPERATURE_UNIT.GM) {
+        const c = temperatureConversions.find(tc => tc.gasMark === fromValue as string)?.celsius ?? 0;
+        conversion[TEMPERATURE_UNIT.C] = roundToNearestFive(c);
+        conversion[TEMPERATURE_UNIT.F] = roundToNearestFive(cToF(c));
+        conversion[TEMPERATURE_UNIT.GM] = fromValue as string;
+    }
+    return conversion;
+}
