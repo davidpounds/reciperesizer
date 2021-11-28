@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { 
     NUMERIC_REGEXP,
     TIN_TYPE,
     UNIT,
     getAmountUnitOptions,
+    amountToNumber,
 } from "../utils";
 import {
     getRecipeAmount,
@@ -24,16 +25,33 @@ interface Props {
 
 const Amount: React.FC<Props> = (props) => {
     const { tinType } = props;
+    const isResized = tinType === TIN_TYPE.RESIZED;
+    const isRecipe = tinType === TIN_TYPE.RECIPE;
     const dispatch = useDispatch();
-    const [getAmount, getUnit] = tinType === TIN_TYPE.RECIPE ? [getRecipeAmount, getRecipeUnit] : [getResizedAmount, getResizedUnit];
+    const [getAmount, getUnit] = isRecipe ? [getRecipeAmount, getRecipeUnit] : [getResizedAmount, getResizedUnit];
     const amount = useSelector(getAmount);
     const amountUnit = useSelector(getUnit);
     const resizedAmountUnitOptions = useSelector(getResizedCompatibleUnits);
+    const [fieldAmount, setFieldAmount] = useState(amount.toString());
+    const amountInput = useRef<HTMLInputElement>(null);
 
-    const amountChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch(setAmount(tinType, +e.target.value));
+    useEffect(() => {
+        if (!isResized) return;
+        setFieldAmount(amount.toString());
+    }, [isResized, amount]);
+
+    const recalculate = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void =>  {
+        const value = amountInput?.current?.value ?? '';
+        setFieldAmount(value);
+        const newAmount = amountToNumber(value);
+        dispatch(setAmount(tinType, newAmount));
     };
-    const amountUnitChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+
+    const amountChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        setFieldAmount(e.target.value);
+    };
+
+    const amountUnitChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>): void => {
         dispatch(setUnit(tinType, e.target.value as UNIT));
     };
 
@@ -42,19 +60,20 @@ const Amount: React.FC<Props> = (props) => {
     return (
         <div className="form-group">
             <label htmlFor={`${tinType}_amount`}>
-                {tinType === TIN_TYPE.RECIPE && <>Enter the recipe amount</>}
-                {tinType === TIN_TYPE.RESIZED && <>Resized amount</>}
+                {isRecipe && <>Enter the recipe amount</>}
+                {isResized && <>Resized amount</>}
             </label>
             <input 
                 id={`${tinType}_amount`} 
                 type="text" 
                 className="numeric" 
                 pattern={NUMERIC_REGEXP} 
-                value={amount}
+                value={fieldAmount}
                 size={6}
                 maxLength={6}
+                ref={amountInput}
                 onChange={amountChangeHandler}
-                readOnly={tinType === TIN_TYPE.RESIZED}
+                readOnly={isResized}
             />
 
             <label htmlFor={`${tinType}_amount_unit`} className="off-screen">
@@ -65,17 +84,20 @@ const Amount: React.FC<Props> = (props) => {
                 value={amountUnit}
                 onChange={amountUnitChangeHandler}
             >
-                {tinType === TIN_TYPE.RECIPE && amountUnitOptions.map(optGroup => (
+                {isRecipe && amountUnitOptions.map(optGroup => (
                     <optgroup label={optGroup.label} key={optGroup.label}>
                         {optGroup.children.map(opt => (
                             <option value={opt.value} key={opt.value}>{opt.label}</option>
                         ))}
                     </optgroup>
                 ))}
-                {tinType === TIN_TYPE.RESIZED && resizedAmountUnitOptions.map(opt => (
+                {isResized && resizedAmountUnitOptions.map(opt => (
                     <option value={opt.value} key={opt.value}>{opt.label}</option>
                 ))}
             </select>
+            {isRecipe && (
+                <button onClick={recalculate}>Calculate</button>
+            )}
         </div>
     );
 };

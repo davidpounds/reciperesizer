@@ -75,9 +75,6 @@ export const CONVERSIONS: Conversion[] = [
     { type: UNIT_TYPE.WEIGHT, unit: UNIT.G, conversion: 1000, dp: 0 },
     { type: UNIT_TYPE.WEIGHT, unit: UNIT.LB, conversion: 2.2046226218, dp: 2 },
     { type: UNIT_TYPE.WEIGHT, unit: UNIT.OZ, conversion: 35.2739619496, dp: 1 },
-    { type: UNIT_TYPE.LENGTH, unit: UNIT.CM, conversion: 1, dp: 1 },
-    { type: UNIT_TYPE.LENGTH, unit: UNIT.MM, conversion: 10, dp: 0 },
-    { type: UNIT_TYPE.LENGTH, unit: UNIT.IN, conversion: 0.3937007874, dp: 1 },
     { type: UNIT_TYPE.VOLUME, unit: UNIT.L, conversion: 1, dp: 3 },
     { type: UNIT_TYPE.VOLUME, unit: UNIT.ML, conversion: 1000, dp: 0 },
     { type: UNIT_TYPE.VOLUME, unit: UNIT.UK_FL_OZ, conversion: 35.198873636, display: "UK fluid ounce", dp: 1 },
@@ -89,8 +86,32 @@ export const CONVERSIONS: Conversion[] = [
     { type: UNIT_TYPE.VOLUME, unit: UNIT.TSP, conversion: 200, dp: 1 },
     { type: UNIT_TYPE.EGGS, unit: UNIT.MD, conversion: 1, dp: 1 },
     { type: UNIT_TYPE.EGGS, unit: UNIT.LG, conversion: 0.8529512112, dp: 1 },
-    { type: UNIT_TYPE.EGGS, unit: UNIT.SM, conversion: 1.2083131948, dp: 1 }
+    { type: UNIT_TYPE.EGGS, unit: UNIT.SM, conversion: 1.2083131948, dp: 1 },
+    { type: UNIT_TYPE.LENGTH, unit: UNIT.CM, conversion: 1, dp: 1 },
+    { type: UNIT_TYPE.LENGTH, unit: UNIT.MM, conversion: 10, dp: 0 },
+    { type: UNIT_TYPE.LENGTH, unit: UNIT.IN, conversion: 0.3937007874, dp: 1 },
 ];
+
+const isNumeric = (n: string): boolean => {
+    const onlyAllowedCharacters = /^[0-9.]+$/.test(n);
+    const decimalCheck = [...n.matchAll(/\./g)].length <= 1;
+    return onlyAllowedCharacters && decimalCheck;
+};
+
+const isFraction = (n: string): RegExpMatchArray | null => n.match(/^(\d)\/(\d)$/);
+
+export const amountToNumber = (amount: string): number => {
+    const floatValue = Number.parseFloat(amount);
+    if (!Number.isNaN(floatValue) && isNumeric(amount)) return floatValue;
+    const fraction = isFraction(amount);
+    if (fraction !== null) {
+        const [, numerator, divisor] = fraction;
+        const numeratorNumber = Number.parseInt(numerator, 10);
+        const divisorNumber = Number.parseInt(divisor, 10);
+        if (divisorNumber !== 0) return numeratorNumber / divisorNumber;
+    }
+    return 0;
+}; 
 
 export const ucFirst = (text: string) => text.substr(0, 1).toUpperCase() + text.substr(1);
 
@@ -151,6 +172,7 @@ export const getResizedAmountUnitOptions = (amountUnit: UNIT): UnitOption[] => {
     return compatibleConversions.map(conversion => ({label: conversion.display || conversion.unit, value: conversion.unit}));
 };
 
+// Temperatures
 const roundToNearestTen = (value: number): number => Math.round(value / 10) * 10;
 const roundToNearestFive = (value: number): number => Math.round(value / 20) * 20;
 const cToF = (c: number): number => c * 9 / 5 + 32;
